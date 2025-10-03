@@ -1,0 +1,78 @@
+<?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+$routes->get('/', 'LoginController::index');
+$routes->post('login', 'LoginController::attempLogin');
+$routes->get('logout', 'LoginController::logout');
+$routes->get('daftar', 'DaftarController::index');
+$routes->post('register', 'DaftarController::register');
+
+
+$routes->get('dashboard', 'Dashboard::index', ['filter' => 'auth']);
+
+// Sampah
+$routes->group('sampah', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'SampahController::index');
+    $routes->get('create', 'SampahController::create');
+    $routes->post('store', 'SampahController::store');
+    $routes->get('edit/(:num)', 'SampahController::edit/$1');
+    $routes->post('delete', 'SampahController::delete');
+});
+
+// Klien
+$routes->group('data-klien', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'DataKlienController::index');
+    $routes->get('create', 'DataKlienController::create');
+    $routes->post('store', 'DataKlienController::store');
+    $routes->get('edit/(:num)', 'DataKlienController::edit/$1');
+    $routes->post('delete', 'DataKlienController::delete');
+});
+
+// Penjualan
+$routes->group('penjualan', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'PenjualanController::index');
+    $routes->get('create', 'PenjualanController::create');
+    $routes->post('sampah-ajax', 'PenjualanController::sampahAjax');
+    $routes->post('store', 'PenjualanController::store');
+    $routes->get('edit/(:num)', 'PenjualanController::edit/$1');
+    $routes->post('delete', 'PenjualanController::delete');
+});
+
+// Pembelian
+$routes->group('pembelian', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'PembelianController::index');
+    $routes->get('create', 'PembelianController::create');
+    $routes->post('sampah-ajax', 'PembelianController::sampahAjax');
+    $routes->post('store', 'PembelianController::store');
+    $routes->get('edit/(:num)', 'PembelianController::edit/$1');
+    $routes->post('delete', 'PembelianController::delete');
+});
+
+// Data Laporan
+$routes->group('laporan', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'LaporanController::index');
+    $routes->post('getLaporanData', 'LaporanController::getLaporanData');
+    $routes->post('store', 'LaporanController::store');
+    $routes->get('edit/(:num)', 'LaporanController::edit/$1');
+    $routes->post('delete', 'LaporanController::delete');
+    $routes->get('pemasukan', 'LaporanController::pemasukan');
+});
+
+// Metode Bayar
+$routes->group('metode-bayar', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'MetodePembayaranController::index');
+    $routes->get('create', 'MetodePembayaranController::create');
+    $routes->post('store', 'MetodePembayaranController::store');
+    $routes->get('edit/(:num)', 'MetodePembayaranController::edit/$1');
+    $routes->post('delete', 'MetodePembayaranController::delete');
+});
+
+// Reset Password
+$routes->group('reset', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'ResetController::index');
+    $routes->post('update', 'ResetController::update');
+});
