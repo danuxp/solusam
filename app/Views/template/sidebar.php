@@ -38,8 +38,8 @@ function isActive($url, $strict = false)
         <!-- <a href="<?= base_url('metode-bayar') ?>" class="nav-link py-2 <?= isActive('metode-bayar') ?>"><i class="ti ti-cash"></i> Metode Bayar</a> -->
         <a href="<?= base_url('sampah') ?>" class="nav-link py-2 <?= isActive('sampah') ?>"><i class="ti ti-trash"></i> Data Sampah</a>
         <a href="<?= base_url('data-klien') ?>" class="nav-link py-2 <?= isActive('data-klien') ?>"><i class="ti ti-users"></i> Data Klien</a>
-        <a href="#" class="nav-link py-2"><i class="ti ti-moneybag-plus"></i> Data Pemasukan</a>
-        <a href="#" class="nav-link py-2"><i class="ti ti-moneybag-minus"></i> Data Pengeluaran</a>
+        <a href="<?= base_url('pemasukan') ?>" class="nav-link py-2 <?= isActive('pemasukan') ?>"><i class="ti ti-moneybag-plus"></i> Data Pemasukan</a>
+        <a href="<?= base_url('pengeluaran') ?>" class="nav-link py-2 <?= isActive('pengeluaran') ?>"><i class="ti ti-moneybag-minus"></i> Data Pengeluaran</a>
 
         <p class="text-uppercase fw-semibold mt-3 mb-1">Lainnya</p>
         <a href="<?= base_url('laporan') ?>" class="nav-link py-2 <?= isActive('laporan') ?>"><i class="ti ti-file"></i> Data Laporan</a>

@@ -22,6 +22,7 @@
                         <th scope="col">Jumlah</th>
                         <th scope="col">Harga</th>
                         <th scope="col">Total</th>
+                        <th scope="col">Klien</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -43,6 +44,7 @@
                             <td><?= $row['jumlah']; ?></td>
                             <td><?= formatRupiah($row['harga_beli']); ?></td>
                             <td class="text-success fw-semibold"><?= formatRupiah($total); ?></td>
+                            <td><?= $row['nama_lengkap']; ?></td>                            
                             <td>
                                 <a href="<?= base_url('pembelian/edit/' . $row['id']) ?>" class="btn btn-outline-primary btn-sm">
                                     <i class="ti ti-pencil"></i>

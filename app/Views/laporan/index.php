@@ -43,7 +43,12 @@
 
 <div class="card shadow-sm border-0 mt-4">
     <div class="card-body">
-        <h5 class="card-title mb-3"><?= $title; ?></h5>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0"><?= $title; ?></h5>
+            <button class="btn btn-success" id="export-excel">
+                <i class="ti ti-file-export"></i> Export Excel
+            </button>
+        </div>
 
         <!-- Filter Laporan -->
         <div class="row mb-3">
@@ -263,6 +268,28 @@
     // Event handler untuk filter harian
     $('#tanggal-selesai').change(function() {
         loadLaporan('harian', null, null, $('#tanggal-mulai').val(), $('#tanggal-selesai').val());
+    });
+
+    // Export Excel functionality
+    $('#export-excel').click(function() {
+        var filterType = $('#filter-type').val();
+        var tahun = $('#tahun').val();
+        var bulan = $('#bulan').val();
+        var tahunBulan = $('#tahun-bulan').val();
+        var tanggalMulai = $('#tanggal-mulai').val();
+        var tanggalSelesai = $('#tanggal-selesai').val();
+
+        var url = '<?= base_url('laporan/export'); ?>?';
+        
+        if (filterType === 'tahun') {
+            url += 'tahun=' + tahun;
+        } else if (filterType === 'bulan') {
+            url += 'tahun=' + tahunBulan + '&bulan=' + bulan;
+        } else if (filterType === 'harian') {
+            url += 'tanggal_mulai=' + tanggalMulai + '&tanggal_selesai=' + tanggalSelesai;
+        }
+
+        window.open(url, '_blank');
     });
 </script>
 <?= $this->endSection(); ?>

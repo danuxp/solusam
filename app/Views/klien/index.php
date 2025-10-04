@@ -2,7 +2,7 @@
 <?= $this->section('content'); ?>
 
 <h1 class="h3 fw-bold text-dark"><?= $title; ?></h1>
-<p class="text-muted">Kelola data kien</p>
+<p class="text-muted">Kelola data klien</p>
 
 <a href="<?= base_url('data-klien/create') ?>" class="btn btn-success btn-sm mb-3">
     <i class="ti ti-plus"></i> Tambah Data

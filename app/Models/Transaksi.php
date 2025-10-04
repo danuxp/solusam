@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Transaksi extends Model
 {
     protected $table            = 'transaksi';
-    protected $allowedFields    = ['tanggal', 'sampah_id', 'jumlah', 'jenis', 'client_id', 'pembeli', 'metode_bayar_id', 'bukti'];
+    protected $allowedFields    = ['tanggal', 'sampah_id', 'jumlah', 'jenis', 'client_id', 'pembeli', 'metode_bayar', 'bukti'];
 
     // Dates
     protected $useTimestamps = true;
@@ -18,9 +18,9 @@ class Transaksi extends Model
     {
         $builder = $this->db->table('transaksi t');
         $builder->select('t.*, s.nama_sampah, s.harga_beli, s.harga_jual, s.satuan,
-        m.nama as metode_bayar, c.nama_lengkap, c.no_telp, c.alamat, c.jenis_usaha');
+        c.nama_lengkap, c.no_telp, c.alamat, c.jenis_usaha');
         $builder->join('data_sampah s', 's.id = t.sampah_id');
-        $builder->join('metode_pembayaran m', 'm.id = t.metode_bayar_id', 'left');
+        // $builder->join('metode_pembayaran m', 'm.id = t.metode_bayar_id', 'left');
         $builder->join('client c', 'c.id = t.pembeli', 'left');
         $builder->where('t.client_id', $client_id);
         $builder->where('t.jenis', $jenis);
@@ -63,10 +63,10 @@ class Transaksi extends Model
         $builder = $this->db->table('transaksi t');
         $builder->select(
             'COUNT(t.id) as jumlah, 
-        SUM(CASE WHEN t.jenis = "in" THEN (t.jumlah * s.harga_jual) ELSE 0 END) as total_pendapatan,
-        SUM(CASE WHEN t.jenis = "out" THEN (t.jumlah * s.harga_beli) ELSE 0 END) as total_pengeluaran,
-        SUM(CASE WHEN t.jenis = "in" THEN (t.jumlah * s.harga_jual) ELSE 0 END) - 
-        SUM(CASE WHEN t.jenis = "out" THEN (t.jumlah * s.harga_beli) ELSE 0 END) as total_keuntungan
+        SUM(CASE WHEN t.jenis = "out" THEN (t.jumlah * s.harga_jual) ELSE 0 END) as total_pendapatan,
+        SUM(CASE WHEN t.jenis = "in" THEN (t.jumlah * s.harga_beli) ELSE 0 END) as total_pengeluaran,
+        SUM(CASE WHEN t.jenis = "out" THEN (t.jumlah * s.harga_jual) ELSE 0 END) - 
+        SUM(CASE WHEN t.jenis = "in" THEN (t.jumlah * s.harga_beli) ELSE 0 END) as total_keuntungan
         '
         );
         $builder->join('data_sampah s', 's.id = t.sampah_id');
@@ -166,6 +166,56 @@ class Transaksi extends Model
         $builder->where('t.client_id', $client_id);
 
         $query = $builder->get()->getRowArray();
+        return $query;
+    }
+
+    public function getDataInOutLaporan($client_id, $jenis = null, $tahun = null, $bulan = null, $tanggal_mulai = null, $tanggal_selesai = null)
+    {
+        $builder = $this->db->table('transaksi t');
+        $builder->select(
+            't.*,
+            s.nama_sampah,
+            s.harga_jual,
+            s.harga_beli,
+            s.satuan,
+            c.nama_lengkap,
+            (t.jumlah * s.harga_jual) as total_pendapatan,
+            (t.jumlah * s.harga_beli) as total_pengeluaran
+        '
+        );
+        $builder->join('data_sampah s', 's.id = t.sampah_id');
+        $builder->join('client c', 'c.id = t.pembeli', 'left');
+        $builder->where('t.client_id', $client_id);
+        if($jenis == 'in') {
+            $builder->where('t.jenis', 'in');
+        } else {
+            $builder->where('t.jenis', 'out');
+        }
+
+        // CASE: Group by Tahun → per Bulan
+        if ($tahun && !$bulan && !$tanggal_mulai && !$tanggal_selesai) {
+            $builder->where('YEAR(t.tanggal)', $tahun);
+            // $builder->groupBy('YEAR(t.tanggal), MONTH(t.tanggal)');
+            $builder->orderBy('MONTH(t.tanggal)', 'ASC');
+        }
+
+        // CASE: Group by Bulan → per Tanggal
+        if ($bulan && $tahun) {
+            $builder->where('YEAR(t.tanggal)', $tahun);
+            $builder->where('MONTH(t.tanggal)', $bulan);
+            // $builder->groupBy('DATE(t.tanggal)');
+            $builder->orderBy('DATE(t.tanggal)', 'ASC');
+        }
+
+        // CASE: Range Harian
+        if ($tanggal_mulai && $tanggal_selesai) {
+            $builder->where('DATE(t.tanggal) >=', $tanggal_mulai);
+            $builder->where('DATE(t.tanggal) <=', $tanggal_selesai);
+            // $builder->groupBy('DATE(t.tanggal)');
+            $builder->orderBy('DATE(t.tanggal)', 'ASC');
+        }
+
+        $query = $builder->get()->getResultArray();
         return $query;
     }
 }

@@ -60,7 +60,16 @@ $routes->group('laporan', ['filter' => 'auth'], function ($routes) {
     $routes->get('edit/(:num)', 'LaporanController::edit/$1');
     $routes->post('delete', 'LaporanController::delete');
     $routes->get('pemasukan', 'LaporanController::pemasukan');
+    $routes->get('export', 'LaporanController::exportLaporan');
 });
+
+// Pemasukan dan Pengeluaran
+$routes->get('pemasukan', 'LaporanController::pemasukan', ['filter' => 'auth']);
+$routes->get('pengeluaran', 'LaporanController::pengeluaran', ['filter' => 'auth']);
+$routes->post('getDataInOut', 'LaporanController::getDataInOut', ['filter' => 'auth']);
+$routes->get('export-pemasukan', 'LaporanController::exportPemasukan', ['filter' => 'auth']);
+$routes->get('export-pengeluaran', 'LaporanController::exportPengeluaran', ['filter' => 'auth']);
+
 
 // Metode Bayar
 $routes->group('metode-bayar', ['filter' => 'auth'], function ($routes) {

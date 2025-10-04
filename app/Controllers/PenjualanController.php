@@ -27,7 +27,7 @@ class PenjualanController extends BaseController
     {
         $data = [
             "title" => "Data Penjualan",
-            "data" => $this->transaksiModel->getPenjualan(session('clientId'), 'in'),
+            "data" => $this->transaksiModel->getPenjualan(session('clientId'), 'out'),
         ];
 
         return view('penjualan/index', $data);
@@ -70,7 +70,6 @@ class PenjualanController extends BaseController
         $tanggal = $this->request->getPost('tanggal');
         $nama_sampah = $this->request->getPost('nama_sampah');
         $jumlah_jual = $this->request->getPost('jumlah_jual');
-        $pembeli = $this->request->getPost('pembeli');
         $metode_bayar = $this->request->getPost('metode_bayar');
         $id = $this->request->getPost('id');
         $bukti_qris = $this->request->getFile('bukti_qris');
@@ -79,15 +78,21 @@ class PenjualanController extends BaseController
             'tanggal' => $tanggal,
             'sampah_id' => $nama_sampah,
             'jumlah' => $jumlah_jual,
-            'pembeli' => $pembeli,
-            'metode_bayar_id' => $metode_bayar,
+            'metode_bayar' => $metode_bayar,
         ];
 
+        // Handle upload file bukti QRIS
         if ($bukti_qris && $bukti_qris->isValid() && !$bukti_qris->hasMoved()) {
             $filename = $bukti_qris->getRandomName();
             $data['bukti'] = $filename;
 
-            $bukti_qris->move(ROOTPATH . 'public/bukti', $filename);
+            // Pastikan folder bukti ada
+            $buktiPath = ROOTPATH . 'public/bukti';
+            if (!is_dir($buktiPath)) {
+                mkdir($buktiPath, 0755, true);
+            }
+
+            $bukti_qris->move($buktiPath, $filename);
         }
 
         if ($id) {
@@ -96,7 +101,7 @@ class PenjualanController extends BaseController
         } else {
             $text = 'ditambahkan';
             $data['client_id'] = session('clientId');
-            $data['jenis'] = 'in';
+            $data['jenis'] = 'out';
         }
 
         try {

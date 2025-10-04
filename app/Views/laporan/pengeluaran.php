@@ -2,13 +2,13 @@
 <?= $this->section('content'); ?>
 
 <h1 class="h3 fw-bold text-dark"><?= $title; ?></h1>
-<p class="text-muted">Kelola data laporan pendapatan</p>
+<p class="text-muted">Kelola data laporan pengeluaran</p>
 
 <div class="row g-4">
     <div class="col-12 col-sm-6 col-lg-3">
         <div class="card shadow-sm h-100">
             <div class="card-body">
-                <p class="text-muted small mb-1"><i class="ti ti-chart-line text-success"></i> Total Pemasukan</p>
+                <p class="text-muted small mb-1"><i class="ti ti-chart-line text-success"></i> Total Pengeluaran</p>
                 <h5 class="fw-bold text-success" id="total-uang-masuk"></h5>
             </div>
         </div>
@@ -29,7 +29,7 @@
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="card-title mb-0"><?= $title; ?></h5>
-            <button class="btn btn-success" id="export-excel">
+            <button class="btn btn-danger" id="export-excel">
                 <i class="ti ti-file-export"></i> Export Excel
             </button>
         </div>
@@ -130,7 +130,7 @@
                 bulan: bulan,
                 tanggal_mulai: tanggalMulai,
                 tanggal_selesai: tanggalSelesai,
-                jenis: 'out'
+                jenis: 'in'
             },
             success: function(response) {
                 console.log(response);
@@ -168,14 +168,14 @@
                 // // Isi data ke table
                 $.each(response, function(i, item) {
                     let totalPendapatan = parseFloat(item.total_pendapatan) || 0;
-                    let hargaJual = parseFloat(item.harga_jual) || 0;
+                    let hargaBeli = parseFloat(item.harga_beli) || 0;
                     $('table tbody').append(`
                             <tr>
                                 <td>${i+1}</td>
                                 <td>${item.tanggal}</td>
                                 <td>${item.nama_sampah}</td>
                                 <td>${item.jumlah}</td>
-                                <td>Rp ${hargaJual.toLocaleString('id-ID')}</td>
+                                <td>Rp ${hargaBeli.toLocaleString('id-ID')}</td>
                                 <td>Rp ${totalPendapatan.toLocaleString('id-ID')}</td>
                             </tr>
                         `);
@@ -238,7 +238,7 @@
         var tanggalMulai = $('#tanggal-mulai').val();
         var tanggalSelesai = $('#tanggal-selesai').val();
 
-        var url = '<?= base_url('export-pemasukan'); ?>?';
+        var url = '<?= base_url('export-pengeluaran'); ?>?';
         
         if (filterType === 'tahun') {
             url += 'tahun=' + tahun;

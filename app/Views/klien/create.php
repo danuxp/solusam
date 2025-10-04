@@ -14,19 +14,19 @@
                     <!-- Nama Lengkap -->
                     <div class="col-md-6">
                         <label class="form-label">Nama Lengkap</label>
-                        <input type="text" name="nama_lengkap" class="form-control" required>
+                        <input type="text" name="nama_lengkap" class="form-control">
                     </div>
 
                     <!-- No Telp -->
                     <div class="col-md-6">
                         <label class="form-label">No Telp</label>
-                        <input type="text" name="no_telp" class="form-control" required>
+                        <input type="text" name="no_telp" class="form-control">
                     </div>
 
                     <!-- Alamat -->
                     <div class="col-md-12">
                         <label class="form-label">Alamat</label>
-                        <input type="text" name="alamat" class="form-control" required>
+                        <input type="text" name="alamat" class="form-control">
                     </div>
 
                     <!-- Jenis Usaha -->

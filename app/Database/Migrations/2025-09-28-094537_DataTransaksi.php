@@ -39,15 +39,19 @@ class DataTransaksi extends Migration
                 'constraint' => 11,
                 'null' => true,
             ],
-            'metode_bayar_id' => [
-                'type'       => 'INT',
-                'constraint' => 11,
+            'metode_bayar' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 20,
                 'null' => true,
+            ],
+            'bukti' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 100,
+                'null' => true
             ],
             'created_at' => [
                 'type' => 'TIMESTAMP',
                 'null' => true,
-
             ],
             'updated_at' => [
                 'type' => 'TIMESTAMP',

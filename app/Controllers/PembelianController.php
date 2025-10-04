@@ -27,7 +27,7 @@ class PembelianController extends BaseController
     {
         $data = [
             "title" => "Data Pembelian",
-            "data" => $this->transaksiModel->getPenjualan(session('clientId'), 'out'),
+            "data" => $this->transaksiModel->getPenjualan(session('clientId'), 'in'),
         ];
 
         return view('pembelian/index', $data);
@@ -39,6 +39,7 @@ class PembelianController extends BaseController
             "title" => "Tambah Data Pembelian",
             "sampah" => $this->sampahModel->where('client_id', session('clientId'))->findAll(),
             "bayar" => $this->metodeBayarModel->where('client_id', session('clientId'))->findAll(),
+            "klien" => $this->klienModel->where('client_id', session('clientId'))->findAll(),
         ];
 
         return view('pembelian/create', $data);
@@ -51,6 +52,8 @@ class PembelianController extends BaseController
             "sampah" => $this->sampahModel->where('client_id', session('clientId'))->findAll(),
             "bayar" => $this->metodeBayarModel->where('client_id', session('clientId'))->findAll(),
             "data" => $this->transaksiModel->find($id),
+            "klien" => $this->klienModel->where('client_id', session('clientId'))->findAll(),
+
         ];
 
         return view('pembelian/edit', $data);
@@ -69,11 +72,14 @@ class PembelianController extends BaseController
         $nama_sampah = $this->request->getPost('nama_sampah');
         $jumlah_beli = $this->request->getPost('jumlah_beli');
         $id = $this->request->getPost('id');
-
+        $pembeli = $this->request->getPost('pembeli');   
+        
+        
         $data = [
             'tanggal' => $tanggal,
             'sampah_id' => $nama_sampah,
             'jumlah' => $jumlah_beli,
+            'pembeli' => $pembeli,
         ];
 
         if ($id) {
@@ -82,7 +88,7 @@ class PembelianController extends BaseController
         } else {
             $text = 'ditambahkan';
             $data['client_id'] = session('clientId');
-            $data['jenis'] = 'out';
+            $data['jenis'] = 'in';
         }
 
         try {

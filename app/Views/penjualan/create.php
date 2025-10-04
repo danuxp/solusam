@@ -47,7 +47,7 @@
 
 
                 <div class="col-md-4">
-                    <label class="form-label">Jumlah</label>
+                    <label class="form-label">Jumlah (kg)</label>
                     <input
                         type="number"
                         min="1"
@@ -58,17 +58,7 @@
                         required>
                 </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Pembeli</label>
-                    <select name="pembeli" class="form-select" id="pembeli" required>
-                        <option value="" selected disabled>-- Pilih Pembeli --</option>
-                        <?php foreach ($klien as $row) : ?>
-                            <option value="<?= $row['id'] ?>">
-                                <?= $row['nama_lengkap'] ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                
 
                 <div class="col-md-4">
                     <label class="form-label">Total Harga</label>
@@ -86,11 +76,8 @@
                     <label class="form-label">Metode Bayar</label>
                     <select name="metode_bayar" class="form-select" id="metode_bayar" required>
                         <option value="" selected disabled>-- Pilih Metode --</option>
-                        <?php foreach ($bayar as $row) : ?>
-                            <option value="<?= $row['id'] ?>">
-                                <?= $row['nama'] ?>
-                            </option>
-                        <?php endforeach; ?>
+                        <option value="qris">QRIS</option>
+                        <option value="tunai">Tunai</option>
                     </select>
                 </div>
 
@@ -105,7 +92,7 @@
                 <button type="submit" class="btn btn-success">
                     Simpan
                 </button>
-                <a href="<?= base_url('sampah') ?>" class="btn btn-secondary">
+                <a href="<?= base_url('penjualan') ?>" class="btn btn-secondary">
                     Batal
                 </a>
             </div>
@@ -149,7 +136,6 @@
     $("#metode_bayar").on("change", function() {
         let metode = $(this).find("option:selected").text();
         let valMetode = metode.toLowerCase().trim()
-        console.log(metode);
 
 
         if (valMetode == "qris") {

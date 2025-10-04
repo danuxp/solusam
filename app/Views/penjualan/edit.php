@@ -57,7 +57,7 @@
 
 
                 <div class="col-md-4">
-                    <label class="form-label">Jumlah</label>
+                    <label class="form-label">Jumlah (kg)</label>
                     <input
                         type="number"
                         min="1"
@@ -69,19 +69,7 @@
                         required>
                 </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Pembeli</label>
-                    <select name="pembeli" class="form-select" id="pembeli" required>
-                        <option value="" selected disabled>-- Pilih Pembeli --</option>
-                        <?php foreach ($klien as $row) :
-                            $selected  = $row['id'] == $data['pembeli'] ? 'selected' : '';
-                        ?>
-                            <option value="<?= $row['id'] ?>" <?= $selected ?>>
-                                <?= $row['nama_lengkap'] ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                
 
                 <div class="col-md-4">
                     <label class="form-label">Total Harga</label>
@@ -99,13 +87,8 @@
                     <label class="form-label">Metode Bayar</label>
                     <select name="metode_bayar" class="form-select" id="metode_bayar" required>
                         <option value="" selected disabled>-- Pilih Metode --</option>
-                        <?php foreach ($bayar as $row) :
-                            $selected  = $row['id'] == $data['metode_bayar_id'] ? 'selected' : '';
-                        ?>
-                            <option value="<?= $row['id'] ?>" <?= $selected ?>>
-                                <?= $row['nama'] ?>
-                            </option>
-                        <?php endforeach; ?>
+                        <option value="qris">QRIS</option>
+                        <option value="tunai">Tunai</option>
                     </select>
                 </div>
             </div>

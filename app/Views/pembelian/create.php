@@ -69,6 +69,20 @@
                         id="total_harga"
                         required>
                 </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Klien</label>
+                    <select name="pembeli" class="form-select" id="pembeli" required>
+                        <option value="" selected disabled>-- Pilih Pembeli --</option>
+                        <?php foreach ($klien as $row) : ?>
+                            <option value="<?= $row['id'] ?>">
+                                <?= $row['nama_lengkap'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                
             </div>
 
             <!-- Tombol Aksi -->

@@ -22,7 +22,6 @@
                         <th scope="col">Jumlah</th>
                         <th scope="col">Harga</th>
                         <th scope="col">Total</th>
-                        <th scope="col">Pembeli</th>
                         <th scope="col">Metode Bayar</th>
                         <th scope="col">Aksi</th>
                     </tr>
@@ -46,7 +45,6 @@
                             <td><?= $row['jumlah']; ?></td>
                             <td><?= formatRupiah($row['harga_jual']); ?></td>
                             <td class="text-success fw-semibold"><?= formatRupiah($total); ?></td>
-                            <td><?= $row['nama_lengkap']; ?></td>
                             <td><?= $row['metode_bayar'] . ' ' . $bukti; ?></td>
                             <td>
                                 <a href="<?= base_url('penjualan/edit/' . $row['id']) ?>" class="btn btn-outline-primary btn-sm">
