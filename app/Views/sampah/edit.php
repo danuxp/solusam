@@ -51,9 +51,10 @@
 
                 <!-- Satuan -->
                 <div class="col-md-3">
-                    <label class="form-label">Satuan</label>
+                    <label class="form-label">Satuan (kg)</label>
                     <input
-                        type="text"
+                        type="number"
+                        min="1"
                         name="satuan"
                         class="form-control"
                         required value="<?= $data['satuan'] ?>">

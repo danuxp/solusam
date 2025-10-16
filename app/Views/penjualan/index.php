@@ -47,11 +47,16 @@
                             <td class="text-success fw-semibold"><?= formatRupiah($total); ?></td>
                             <td><?= $row['metode_bayar'] . ' ' . $bukti; ?></td>
                             <td>
-                                <a href="<?= base_url('penjualan/edit/' . $row['id']) ?>" class="btn btn-outline-primary btn-sm">
+                                <a href="<?= base_url('penjualan/edit/' . $row['id']) ?>" class="btn btn-outline-primary btn-sm" title="Edit">
                                     <i class="ti ti-pencil"></i>
                                 </a>
+                                <?php if ($row['metode_bayar'] === 'qris'): ?>
+                                    <a href="<?= base_url('penjualan/qrcode/' . $row['id']) ?>" class="btn btn-outline-success btn-sm" title="Lihat QR Code">
+                                        <i class="ti ti-qrcode"></i>
+                                    </a>
+                                <?php endif; ?>
                                 <button type="button" data-nama="<?= $row['nama_sampah'] ?>" data-id="<?= $row['id'] ?>"
-                                    onclick="hapus(this)" class="btn btn-outline-danger btn-sm">
+                                    onclick="hapus(this)" class="btn btn-outline-danger btn-sm" title="Hapus">
                                     <i class="ti ti-trash"></i>
                                 </button>
                             </td>

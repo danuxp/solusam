@@ -13,4 +13,16 @@ class Sampah extends Model
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+    public function getStokTersedia($sampah_id)
+    {
+        $builder = $this->db->table('data_sampah');
+        $builder->select('
+            satuan as stok_tersedia
+        ');
+        $builder->where('id', $sampah_id);
+
+        $result = $builder->get()->getRowArray();
+        return $result['stok_tersedia'] ?? 0;
+    }
 }

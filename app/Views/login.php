@@ -51,7 +51,7 @@
         <form action="<?= base_url('login') ?>" method="POST" class="needs-validation" novalidate>
             <div class="mb-3">
                 <label class="form-label small">Username/Email</label>
-                <input type="text" class="form-control form-control-sm" name="username" placeholder="Masukkan username atau email" required>
+                <input type="text" class="form-control form-control-sm" name="username" placeholder="Masukkan username atau email" required value="<?= old('username') ?>">
             </div>
 
             <div class="mb-3">

@@ -20,7 +20,7 @@
                         <th scope="col">Nama Sampah</th>
                         <th scope="col">Harga Beli</th>
                         <th scope="col">Harga Jual</th>
-                        <th scope="col">Satuan</th>
+                        <th scope="col">Satuan (kg)</th>
                         <th scope="col">Margin</th>
                         <th scope="col">Aksi</th>
                     </tr>

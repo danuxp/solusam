@@ -46,12 +46,12 @@
 
                 <!-- Satuan -->
                 <div class="col-md-3">
-                    <label class="form-label">Satuan</label>
+                    <label class="form-label">Satuan (kg)</label>
                     <input
-                        type="text"
+                        type="number"
                         name="satuan"
                         class="form-control"
-                        value="kg"
+                        min="1"
                         required>
                 </div>
             </div>

@@ -40,6 +40,10 @@ $routes->group('penjualan', ['filter' => 'auth'], function ($routes) {
     $routes->post('store', 'PenjualanController::store');
     $routes->get('edit/(:num)', 'PenjualanController::edit/$1');
     $routes->post('delete', 'PenjualanController::delete');
+    $routes->get('qrcode/(:num)', 'PenjualanController::showQrCode/$1');
+    $routes->get('qrcode-image/(:num)', 'PenjualanController::generateQrCode/$1');
+    $routes->get('qrcode-simple/(:num)', 'PenjualanController::generateQrCodeSimple/$1');
+    $routes->get('test-qrcode', 'PenjualanController::testQrCode');
 });
 
 // Pembelian
@@ -84,4 +88,10 @@ $routes->group('metode-bayar', ['filter' => 'auth'], function ($routes) {
 $routes->group('reset', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'ResetController::index');
     $routes->post('update', 'ResetController::update');
+});
+
+// Public Routes (tidak perlu login)
+$routes->group('public', function ($routes) {
+    $routes->get('transaksi/(:num)', 'PublicTransaksiController::detail/$1');
+    $routes->get('qrcode/(:num)', 'PublicTransaksiController::generateQrCode/$1');
 });

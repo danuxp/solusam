@@ -186,7 +186,7 @@ class Transaksi extends Model
         $builder->join('data_sampah s', 's.id = t.sampah_id');
         $builder->join('client c', 'c.id = t.pembeli', 'left');
         $builder->where('t.client_id', $client_id);
-        if($jenis == 'in') {
+        if ($jenis == 'in') {
             $builder->where('t.jenis', 'in');
         } else {
             $builder->where('t.jenis', 'out');
@@ -217,5 +217,25 @@ class Transaksi extends Model
 
         $query = $builder->get()->getResultArray();
         return $query;
+    }
+
+    /**
+     * Menghitung stok tersedia untuk sampah tertentu
+     * @param int $sampah_id ID sampah
+     * @param int $client_id ID client
+     * @return float Stok tersedia
+     */
+    public function getStokTersedia($sampah_id, $client_id)
+    {
+        $builder = $this->db->table('transaksi');
+        $builder->select('
+            SUM(CASE WHEN jenis = "in" THEN jumlah ELSE 0 END) - 
+            SUM(CASE WHEN jenis = "out" THEN jumlah ELSE 0 END) as stok_tersedia
+        ');
+        $builder->where('sampah_id', $sampah_id);
+        $builder->where('client_id', $client_id);
+
+        $result = $builder->get()->getRowArray();
+        return $result['stok_tersedia'] ?? 0;
     }
 }
